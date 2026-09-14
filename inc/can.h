@@ -56,4 +56,14 @@ PIOx_IRQHandler(void)
 /// @param bit_rate CAN通信の速度[bps]を決める。例えば1Mbpsで通信したいなら、ここに1000000
 void canbus_setup(uint32_t tx_pin, uint32_t rx_pin, uint32_t bit_rate);
 
+/// @brief CAN通信によりデータを送信する
+/// @param msg 送信するメッセージ
+/// @return 可否
+bool can_transmit(struct can2040_msg msg);
+
+/// @brief CAN通信により受信したメッセージがあればそれを引き出す
+/// @param msg 受信したメッセージを格納する構造体のポインタ
+/// @return メッセージがあればtrue、なければfalseを返す
+bool can_receive(struct can2040_msg* msg);
+
 #endif

@@ -1,25 +1,4 @@
-#ifndef HKDT_PICO_PID_H_
-#define HKDT_PICO_PID_H_
-
-#include "math.h"
-
-typedef struct PidConfig
-{
-    float p_gain;
-    float i_gain;
-    float d_gain;
-    float i_max;
-    float output_max;
-
-    float integral;
-    float prev_mesuarment;
-}PidConfig;
-
-typedef struct CascadeConfig
-{
-    PidConfig position_config;
-    PidConfig velocity_config;
-}CascadeConfig;
+#include "pid.h"
 
 PidConfig hp_init_pid_config(float p_gain, float i_gain, float d_gain, float i_max, float output_max)
 {
@@ -36,12 +15,6 @@ PidConfig hp_init_pid_config(float p_gain, float i_gain, float d_gain, float i_m
     return conf;
 }
 
-/// @brief 微分先行型のPIDを計算する
-/// @param config コンフィグ
-/// @param target 目標値
-/// @param now 現在値
-/// @param dt 制御周期
-/// @return 
 float hp_compute_pi_d(PidConfig* config, float target, float now, float dt)
 {
     float error = target - now;
@@ -80,12 +53,6 @@ float hp_compute_pi_d(PidConfig* config, float target, float now, float dt)
     return output;
 }
 
-/// @brief PIDを計算する
-/// @param config コンフィグ
-/// @param target 目標値
-/// @param now 現在値
-/// @param dt 制御周期
-/// @return 
 float hp_compute_pid(PidConfig* config, float target, float now, float dt)
 {
     float error = target - now;
@@ -130,5 +97,3 @@ float hp_compute_cascade(CascadeConfig* config, float target_position, float now
 
     return hp_compute_pi_d(&config->velocity_config, target_vel, now_velocity, dt);
 }
-
-#endif

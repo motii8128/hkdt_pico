@@ -1,17 +1,4 @@
-#ifndef HKDT_PICO_ROBOMASTER_H_
-#define HKDT_PICO_ROBOMASTER_H_
-
-#include "pico.h"
-#include "pico/stdio.h"
-
-typedef struct RoboMasterSensor
-{
-    short velocity;
-    float position;
-    short torque;
-    short temperature;
-    short angle;
-}RoboMasterSensor;
+#include "robomaster.h"
 
 RoboMasterSensor hp_sensor_init()
 {
@@ -57,5 +44,3 @@ void hp_parse_CANMessage(unsigned char* data, RoboMasterSensor* sensor)
 
     return;
 }
-
-#endif

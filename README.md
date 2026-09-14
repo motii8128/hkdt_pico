@@ -60,33 +60,32 @@ int main(void)
         //　20msごとにCANを送信
         if(diff_us >= 20000)
         {
-            if (can2040_check_transmit(&cbus) > 0) {
-                int status = can2040_transmit(&cbus, &msg);
-
-            } else {
-                // 送信バッファが詰まっている場合のデバッグ出力
-                printf("CAN Tx buffer full or error\n");
+            if(can_transmit(msg))
+            {
+                // 送信成功した場合
+            }
+            else
+            {
+                // 送信に失敗した場合
+                printf("Failed to send data.\n");
             }
 
             last_time = delayed_by_us(last_time, 20000);
         }
         
 
-        uint32_t push_pos = MessageQueue.push_pos;
-        uint32_t pull_pos = MessageQueue.pull_pos;
-        if (push_pos == pull_pos)
-            // No new messages read.
-            continue;
-
-        // Pop message from local receive queue
-        struct can2040_msg *qmsg = &MessageQueue.queue[pull_pos % QUEUE_SIZE];
-        struct can2040_msg msg = *qmsg;
-        MessageQueue.pull_pos++;    
-
-        // CAN受信したデータをロボマスエンコーダに変換する
-        hp_parse_CANMessage(msg.data, &sensor);
-
-        printf("vel=%d, pos=%lf\n", sensor.velocity, sensor.position);   
+        struct can2040_msg recv_msg;
+        
+        if(can_receive(&recv_msg))
+        {
+            // 受信データがあった場合
+            hp_parse_CANMessage(recv_msg.data, &sensor);
+            printf("ID=%d, vel=%d, pos=%lf\n", recv_msg.id, sensor.velocity, sensor.position);  
+        } 
+        else
+        {
+            // 受信データがなかった場合
+        }
     }
 
     return 0;

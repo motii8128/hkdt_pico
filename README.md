@@ -91,3 +91,54 @@ int main(void)
     return 0;
 }
 ```
+
+## W6300によるUDP通信
+```c
+#include "pico/stdlib.h"
+#include "stdio.h"
+
+#include "w6300_ethernet.h"
+
+int main(void)
+{
+    stdio_init_all();
+
+    int socket_num = 0;
+    uint8_t my_ip_addr = {192, 168, 11, 2};
+    uint8_t gate_way = {192, 168, 11, 1};
+    uint16_t my_port = 64201;
+
+    while(initialize_w6300_ethernet(socket_num, my_ip_addr, gate_way, my_port) != socket_num)
+    {
+        printf("initalize w6300 ethernet ...\n");
+        sleep_ms(1000);
+    }
+
+    uint8_t dest_ip_addr = {192, 168, 11, 4};
+    uint16_t dest_port = 64201;
+
+    for(;;)
+    {
+        uint8_t recv_buffer[128];
+        if(recv_w6300_udp(socket_num, recv_buffer, 128) > 0)
+        {
+            // 受信成功
+        }
+        else
+        {
+            // 受信失敗
+        }
+
+        if(send_w6300_udp(socket_num, recv_buffer, 128, dest_ip_addr, dest_port) > 0)
+        {
+            //　送信成功
+        }
+        else
+        {
+            // 送信失敗
+        }
+    }
+
+    return 0;
+}
+```

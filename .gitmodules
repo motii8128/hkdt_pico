@@ -1,7 +1,0 @@
-[submodule "ioLibrary_Driver"]
-	path = ioLibrary_Driver
-	url = https://github.com/Wiznet/ioLibrary_Driver.git
-
-[submodule "can2040"]
-	path = can2040
-	url = https://github.com/KevinOConnor/can2040.git

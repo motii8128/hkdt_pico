@@ -104,8 +104,8 @@ int main(void)
     stdio_init_all();
 
     int socket_num = 0;
-    uint8_t my_ip_addr = {192, 168, 11, 2};
-    uint8_t gate_way = {192, 168, 11, 1};
+    uint8_t my_ip_addr[4] = {192, 168, 11, 2};
+    uint8_t gate_way[4] = {192, 168, 11, 1};
     uint16_t my_port = 64201;
 
     while(initialize_w6300_ethernet(socket_num, my_ip_addr, gate_way, my_port) != socket_num)
@@ -114,7 +114,7 @@ int main(void)
         sleep_ms(1000);
     }
 
-    uint8_t dest_ip_addr = {192, 168, 11, 4};
+    uint8_t dest_ip_addr[4] = {192, 168, 11, 4};
     uint16_t dest_port = 64201;
 
     for(;;)

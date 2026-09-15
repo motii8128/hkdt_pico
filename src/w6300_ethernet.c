@@ -4,9 +4,9 @@ int initialize_w6300_ethernet(int socket_num, uint8_t my_ip_addr[4], uint8_t my_
 {
     wiz_NetInfo w6300_info = {
         .mac = {0x00, 0x08, 0xDC, 0x12, 0x34, 0x56}, // MAC address
-        .ip = my_ip_addr,                     // IP address
+        .ip = {my_ip_addr[0], my_ip_addr[1], my_ip_addr[2], my_ip_addr[3]},                     // IP address
         .sn = {255, 255, 255, 0},                    // Subnet Mask
-        .gw = my_gateway,                     // Gateway
+        .gw = {my_gateway[0], my_gateway[1], my_gateway[2], my_gateway[3]},                     // Gateway
         .lla = {
             0xfe, 0x80, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00,

@@ -31,4 +31,8 @@ int recv_w6300_udp(int socket_num, uint8_t* buffer, int size);
 /// @return 
 int send_w6300_udp(int socket_num, uint8_t* buffer, int size, uint8_t dest_ip[4], uint16_t dest_port);
 
+/// @brief UDP通信を終了しハードウェアリソースを開放する
+/// @param socket_num 
+void close_w6300_ethernet(int socket_num);
+
 #endif

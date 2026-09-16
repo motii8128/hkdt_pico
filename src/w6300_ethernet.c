@@ -98,3 +98,9 @@ int send_w6300_udp(int socket_num, uint8_t* buffer, int size, uint8_t dest_ip[4]
 
     return sendto(socket_num, buffer, size, dest_ip, dest_port, 4);
 }
+
+void close_w6300_ethernet(int socket_num)
+{
+    disconnect(socket_num);
+    close(socket_num);
+}

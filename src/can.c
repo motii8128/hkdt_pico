@@ -47,7 +47,8 @@ bool can_receive(struct can2040_msg* msg)
     }
 
     // Pop message from local receive queue
-    msg = &MessageQueue.queue[pull_pos % QUEUE_SIZE];
+    struct can2040_msg *qmsg = &MessageQueue.queue[pull_pos % QUEUE_SIZE];
+    *msg = *qmsg;
     MessageQueue.pull_pos++;
 
     return true;
